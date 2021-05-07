@@ -1,0 +1,5 @@
+{
+  "prefixUriMap": {
+      ${mapping}
+  }
+}

@@ -1,0 +1,6 @@
+<webscript>
+    <shortname>Gets a map of (namespace, prefix) for every deployed content model</shortname>
+    <description>Gets a map of (namespace, prefix) for every deployed content model</description>
+    <url>/model/ns-prefix-map</url>
+    <authentication>admin</authentication>
+</webscript>
