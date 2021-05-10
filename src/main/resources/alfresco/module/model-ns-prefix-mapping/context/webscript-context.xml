@@ -22,6 +22,6 @@
 	<bean id="webscript.alfresco.model.map-ns-prefix.get"
 		  class="org.alfresco.model.NamespacePrefixMapWebScript"
 		  parent="webscript">
-		<property name="dictionaryService" ref="DictionaryService" />
+		<property name="namespacePrefixResolver" ref="NamespaceService" />
 	</bean>
 </beans>

@@ -17,8 +17,7 @@
  */
 package org.alfresco.model;
 
-import org.alfresco.service.cmr.dictionary.DictionaryService;
-import org.alfresco.service.namespace.QName;
+import org.alfresco.service.namespace.NamespacePrefixResolver;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;
@@ -33,13 +32,13 @@ import java.util.Map;
 public class NamespacePrefixMapWebScript extends DeclarativeWebScript
 {
 
-    private DictionaryService dictionaryService;
+    private NamespacePrefixResolver namespacePrefixResolver;
 
     protected Map<String, Object> executeImpl(WebScriptRequest req, Status status, Cache cache)
     {
         StringBuilder mapping = new StringBuilder();
-        dictionaryService.getAllModels().stream().forEach(model -> {
-          mapping.append("\"" + model.getNamespaceURI() + "\":\"" + QName.splitPrefixedQName(model.getPrefixString())[0] + "\",\n");
+        namespacePrefixResolver.getPrefixes().stream().forEach(prefix -> {
+            mapping.append("\"" + namespacePrefixResolver.getNamespaceURI(prefix) + "\":\"" + prefix + "\",\n");
         });
         mapping.append("\"\":\"\"");
         Map<String, Object> model = new HashMap<String, Object>();
@@ -47,9 +46,8 @@ public class NamespacePrefixMapWebScript extends DeclarativeWebScript
         return model;
     }
 
-    public void setDictionaryService(DictionaryService dictionaryService)
+    public void setNamespacePrefixResolver(NamespacePrefixResolver namespacePrefixResolver)
     {
-        this.dictionaryService = dictionaryService;
+        this.namespacePrefixResolver = namespacePrefixResolver;
     }
-
 }
