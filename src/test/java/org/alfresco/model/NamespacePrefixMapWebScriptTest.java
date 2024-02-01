@@ -91,7 +91,6 @@ public class NamespacePrefixMapWebScriptTest {
             e.printStackTrace(System.err);
             return false;
         }
-        System.out.println(json);
         return true;
     }
 }
