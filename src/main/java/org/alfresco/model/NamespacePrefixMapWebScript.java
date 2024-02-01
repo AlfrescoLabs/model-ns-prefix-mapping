@@ -23,7 +23,9 @@ import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,13 +38,12 @@ public class NamespacePrefixMapWebScript extends DeclarativeWebScript
 
     protected Map<String, Object> executeImpl(WebScriptRequest req, Status status, Cache cache)
     {
-        StringBuilder mapping = new StringBuilder();
-        namespacePrefixResolver.getPrefixes().stream().forEach(prefix -> {
-            mapping.append("\"" + namespacePrefixResolver.getNamespaceURI(prefix) + "\":\"" + prefix + "\",\n");
+        List<String> mapping = new ArrayList<>();
+        namespacePrefixResolver.getPrefixes().forEach(prefix -> {
+            mapping.add("\"" + namespacePrefixResolver.getNamespaceURI(prefix) + "\":\"" + prefix + "\"");
         });
-        mapping.append("\"\":\"\"");
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("mapping", mapping.toString());
+        Map<String, Object> model = new HashMap<>();
+        model.put("mapping", String.join(",\n    ", mapping));
         return model;
     }
 
